@@ -23,13 +23,16 @@ export class BookService {
   async editBook(idOrIsbn: string | number, updatedBook: Partial<Book>): Promise<Book | null> {
     let bookToUpdate: Book | null 
 
-    if (typeof idOrIsbn === 'number') {
+    
       // Edit by ID
-      bookToUpdate = await this.dataSource.getRepository(Book).findOne({where:{id:idOrIsbn}});
-    } else {
+      bookToUpdate = await this.dataSource.getRepository(Book).findOne({where:{id:parseInt(idOrIsbn.toString()) }});
+    /// Check if bookToUpdate is empty 
+    if(!bookToUpdate){
+
       // Edit by ISBN
-      bookToUpdate = await this.dataSource.getRepository(Book).findOne({ where: { isbn: idOrIsbn } });
+      bookToUpdate = await this.dataSource.getRepository(Book).findOne({ where: { isbn: idOrIsbn.toString() } });
     }
+  
 
     if (!bookToUpdate) {
       return null; // Book not found
@@ -43,13 +46,14 @@ export class BookService {
   async getBookbyIdOrIsbn(idOrIsbn: string | number): Promise<Book | null> {
     let book: Book | null 
 
-    if (typeof idOrIsbn === 'number') {
+   
       // Edit by ID
-      book = await this.dataSource.getRepository(Book).findOne({where:{id:idOrIsbn}});
-    } else {
-      // Edit by ISBN
-      book = await this.dataSource.getRepository(Book).findOne({ where: { isbn: idOrIsbn } });
-    }
+      book = await this.dataSource.getRepository(Book).findOne({where:{id:parseInt(idOrIsbn.toString()) }});
+   if (!book) {
+     // Edit by ISBN
+     book = await this.dataSource.getRepository(Book).findOne({ where: { isbn: idOrIsbn.toString() } });
+   }
+   
 
     if (!book) {
       return null; // Book not found
