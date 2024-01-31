@@ -1,6 +1,4 @@
-import { APP, dataSource } from "./index";
-import { AuthorRoutes } from "./routes/authors.route";
-import { BookRoutes } from "./routes/books.route";
+import { APP, dataSource } from "./app";
 
 
 APP.listen(process.env.PORT || 1338, () =>

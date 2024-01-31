@@ -5,8 +5,8 @@ import { Author } from "../model/author.model";
 import { DataSource } from "typeorm";
 
 export class AuthorRoutes{
-    public router = Router();
     
+    public router = Router();
     private authorService:AuthorService;
     constructor(dataSource: DataSource)
     {

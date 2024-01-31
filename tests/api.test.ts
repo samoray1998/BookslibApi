@@ -1,8 +1,8 @@
 import request from "supertest";
-import {  APP, dataSource } from './index';
+import {  APP, dataSource } from '../app';
 
-import { BookRoutes } from "./routes/books.route";
-import { AuthorRoutes } from "./routes/authors.route";
+import { BookRoutes } from "../routes/books.route";
+import { AuthorRoutes } from "../routes/authors.route";
  
 
 beforeEach(async ()=> {
@@ -12,18 +12,18 @@ beforeEach(async ()=> {
 afterEach(async () => {
   await dataSource.destroy()
 })
-  
 
-describe("Test app.ts", () => {
 
-  // We add more ERROR / BookNotFound .. tests
+describe("Testing Endpoints 200 response.", () => {
+
+  // We  should add more ERROR / BookNotFound .. tests
   it('Testing -> /', async () => {
     const res = await request(APP).get("/");
-    expect(res.statusCode).toEqual(200);
+    expect(res.statusCode).toBe(200);
   });
   
-  it('Testing -> /books/all ', async () => {
-    const res = await request(APP).get("/books/all");
+  it('Testing -> /books', async () => {
+    const res = await request(APP).get("/books");
     expect(res.statusCode).toBe(200);
   });
 

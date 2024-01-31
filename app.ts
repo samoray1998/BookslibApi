@@ -1,45 +1,43 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { DataSource, EntityManager } from 'typeorm';
+dotenv.config();
+import { DataSource } from 'typeorm';
 import { Book } from './model/book.model';
-import { BookService } from './services/book.service';
-import { stringify } from 'querystring';
 import { BookRoutes } from './routes/books.route';
 import { Author } from './model/author.model';
 import { AuthorRoutes } from './routes/authors.route';
-dotenv.config();
 
 
+// Usually we use this to avoid CORS problem.
 var cors = require('cors');
 
-//app intialization
-
+// Our App exported to be used in testing with JEST
 export const APP = express();
 
-//Golobal middlewares
+// Golobal middlewares
 APP.use(express.json());
 APP.use(cors());
 
 
-// Setup DB CONNECTION
-// //process.env.DB_NAME
+// Setup Our Database Connection.
 export const dataSource = new DataSource({
     type: 'postgres',
-    host: 'localhost',
-    port: 5432,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT as any,
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
-    database:"mamaneTech" ,
-   
+    database: process.env.DB_NAME,
     logging: true,
-    synchronize: true,
-    entities: [Author,Book], 
+    entities: [
+        Author,
+        Book
+    ], 
 });
 
 
+// Routes Middlewares
 APP.use('/books', new BookRoutes(dataSource).router);
 APP.use("/author",new AuthorRoutes(dataSource).router);
-
 APP.get('/' , (req, res) => {
     return res.send("<h1>Hello world!</h1>");
 });

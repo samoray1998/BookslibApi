@@ -1,24 +1,14 @@
 import { DataSource, Repository } from 'typeorm';
 import { Book } from '../model/book.model';
 import dotenv from 'dotenv';
-// import { dataSource } from '../index';
 dotenv.config();
 
 export class BookService {
-    // private dataSource:DataSource;
-    // private bookRepository: Repository<Book>
-    // constructor(
-    //     ds:DataSource){
-    // this.dataSource=ds;
-    // this.
-    // }
     private dataSource: DataSource;
-
     constructor(dataSource: DataSource){
         this.dataSource = dataSource;
     }
    
-  /// add a new book
 
   async insertBook(bookData: Partial<Book>): Promise<Book> {
     const book = this.dataSource.getRepository(Book).create(bookData);
@@ -26,7 +16,6 @@ export class BookService {
   }
 
   /// get all books
-
   async getAllBooks(): Promise<Book[]> {
     return this.dataSource.getRepository(Book).find();
   }

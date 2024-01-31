@@ -1,5 +1,3 @@
-import { auth } from "firebase-functions/v1";
-import { dataSource } from "../index";
 import { Author } from "../model/author.model";
 import { DataSource } from "typeorm";
 
